@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.teampotato.targetato.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "targetato.refmap.json",
+  "mixins": [
+    "MixinMobEntity"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
