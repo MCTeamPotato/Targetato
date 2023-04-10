@@ -19,8 +19,14 @@ public abstract class MixinMobEntity extends LivingEntity{
 
     @Inject(method = "setTarget", at = @At("HEAD"), cancellable = true)
     private void injectSetTarget(LivingEntity entity, CallbackInfo ci) {
-        if (this.getType().getRegistryName() == null || Targetato.ENTITY_LIST.get().contains(this.getType().getRegistryName().toString())) return;
+        if (this.getType().getRegistryName() == null) return;
         if (entity instanceof PlayerEntity) return;
+        boolean checker = Targetato.LIST.get().contains(this.getType().getRegistryName().toString());
+        if (Targetato.MODE.get().equals("B")) {
+            if (checker) return;
+        } else {
+            if (!checker) return;
+        }
         ci.cancel();
     }
 }
