@@ -5,7 +5,7 @@ import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,7 +20,7 @@ public abstract class MixinMobEntity extends LivingEntity {
 
     @Inject(method = "setTarget", at = @At("HEAD"), cancellable = true)
     private void injectSetTarget(LivingEntity entity, CallbackInfo ci) {
-        if (this.getType().getRegistryName() == null || entity instanceof PlayerEntity || !entity.getType().getCategory().equals(EntityClassification.MONSTER)) return;
+        if (this.getType().getRegistryName() == null || (entity instanceof ServerPlayerEntity && !entity.isSpectator() && !((ServerPlayerEntity) entity).isCreative()) || !entity.getType().getCategory().equals(EntityClassification.MONSTER)) return;
         boolean checker = Targetato.LIST.get().contains(this.getType().getRegistryName().toString());
         if (Targetato.MODE.get().equals("B")) {
             if (checker) return;
