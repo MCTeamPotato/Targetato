@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
@@ -35,7 +36,7 @@ public class Targetato {
     }
 
     public static void injectSetTarget(LivingEntity entity, CallbackInfo ci, MobEntity mob) {
-        if (mob == null || entity == null || mob.getType().getRegistryName() == null || !entity.getType().getCategory().equals(EntityClassification.MONSTER)) return;
+        if (mob == null || entity == null || mob.getType().getRegistryName() == null || !entity.getType().getCategory().equals(EntityClassification.MONSTER) || entity instanceof TameableEntity) return;
         boolean checker = Targetato.LIST.get().contains(mob.getType().getRegistryName().toString());
         if (Targetato.MODE.get().equals("B")) {
             if (checker) return;
