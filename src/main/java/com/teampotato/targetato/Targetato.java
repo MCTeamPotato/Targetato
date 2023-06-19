@@ -4,8 +4,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -41,7 +40,7 @@ public class Targetato {
                 entity == null ||
                 mob.getType().getRegistryName() == null ||
                 !entity.getType().getCategory().equals(EntityClassification.MONSTER) ||
-                mob instanceof TameableEntity
+                !(mob instanceof MonsterEntity)
         ) {
             return;
         }
@@ -50,10 +49,6 @@ public class Targetato {
             if (checker) return;
         } else {
             if (!checker) return;
-        }
-        if (entity instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) entity;
-            if (player.isCreative() || player.isSpectator()) return;
         }
         ci.cancel();
     }
